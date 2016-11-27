@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+xsetroot -name "`date` `uptime | awk '{print $3}' | sed 's/,$//'`"

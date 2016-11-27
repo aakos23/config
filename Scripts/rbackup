@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# Backup to backupfolder
+# add user to sudoers on target for --rsync-path switch
+
+backupdirs=($HOME/)
+
+run_warning(){
+    DISPLAY=:0.0 printf "%s\n" "Backup is beginning…" | dzen2 -p 3
+}
+
+run_complete(){
+    DISPLAY=:0.0 printf "%s\n" "Backup has completed." | dzen2 -p 3
+}
+
+run_warning
+
+rsync -azP --delete --timeout=999 \
+    --exclude-from=/home/aakos/Scripts/excludes.txt \
+    --log-file=/home/aakos/.local/logs/rsync/$(date +%d%m%y).log \
+    "${backupdirs[@]}" $HOME/Package/dotconfig
+
+run_complete
